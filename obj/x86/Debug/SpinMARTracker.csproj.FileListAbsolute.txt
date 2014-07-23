@@ -1,0 +1,15 @@
+C:\Documents and Settings\dwhittaker\My Documents\SharpDevelop Projects\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.dll
+C:\Documents and Settings\dwhittaker\My Documents\SharpDevelop Projects\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.pdb
+C:\Documents and Settings\dwhittaker\My Documents\SharpDevelop Projects\SpinMARTracker\SpinMARTracker\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\dwhittaker\My Documents\SharpDevelop Projects\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.dll
+C:\Documents and Settings\dwhittaker\My Documents\SharpDevelop Projects\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.pdb
+Q:\DAN\Misc\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.dll
+Q:\DAN\Misc\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.pdb
+Q:\DAN\Misc\SpinMARTracker\SpinMARTracker\obj\x86\Debug\ResolveAssemblyReference.cache
+Q:\DAN\Misc\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.dll
+Q:\DAN\Misc\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.pdb
+C:\inetpub\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.csprojResolveAssemblyReference.cache
+C:\inetpub\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.dll
+C:\inetpub\SpinMARTracker\SpinMARTracker\obj\x86\Debug\SpinMARTracker.pdb
+C:\inetpub\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.dll
+C:\inetpub\SpinMARTracker\SpinMARTracker\bin\SpinMARTracker.pdb
