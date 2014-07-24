@@ -58,11 +58,9 @@ namespace SpinMARTracker
 		#region Page Load
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-
+			
 			//------------------------------------------------------------------
-			if (Session["CanMerge"].ToString() != "True"){
-				Response.Redirect("Default.aspx");
-			}
+			SecurityChecks();
 			if(! IsPostBack)
 			{
 				cwcSourceEmp.CtrlDataSource = "select emp_id,last_name + ', ' + first_name + ' (' + isnull(socialsecurityno,emp_id) + ', ' + dept_name + ' ' + job_title + ')' as empinfo from Employee order by last_name, First_Name";
@@ -81,6 +79,11 @@ namespace SpinMARTracker
 			}
 
 			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
+			if (Session["CanMerge"].ToString() != "True"){
+				Response.Redirect("Default.aspx");
+			}
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -165,8 +168,8 @@ namespace SpinMARTracker
 				}
 				else{
 					if(ValIniTraining() == "Run"){
-						//DelFromMerge();
-						//DelFromSource();
+						DelFromMerge();
+						DelFromSource();
 						MoveToMerge();
 					}
 				}
@@ -235,51 +238,50 @@ namespace SpinMARTracker
 			SqlCommand delumar = new SqlCommand("DeleteUploadedMAR",sqlconn);
 			SqlCommand delmed = new SqlCommand("DeleteMedObservation",sqlconn);
 			string type;
-
+			
+			delmar.CommandType = CommandType.StoredProcedure;
+			delmar.Parameters.Add("@CMID",SqlDbType.Int);
+			
+			
+			delumar.CommandType = CommandType.StoredProcedure;
+			delumar.Parameters.Add("@CMID",SqlDbType.Int);
+			
+			delmed.CommandType = CommandType.StoredProcedure;
+			delmed.Parameters.Add("@MedObId",SqlDbType.Int);
+			
+			sqlconn.Open();
 			foreach (DataGridItem i in dgMergeEmp.Items){
 				chkdelc = (CheckBox)i.Cells[3].FindControl("chkDelM");
 				
 				if(chkdelc.Checked==true){
 					type = i.Cells[0].Text.ToString();
 					
-					ManipulateFiles(i.Cells[2].Text.ToString(),type,"Delete");
-					
+					if (type != "Initial Training Dates"){
+						ManipulateFiles(i.Cells[2].Text.ToString(),type,"Delete");
+					}
+		
 					if(type == "MAR Review"){
 						
-						delmar.CommandType = CommandType.StoredProcedure;
-						delmar.Parameters.Add("@CMID",SqlDbType.Int);
+						
 						delmar.Parameters["@CMID"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
 						
-						delumar.CommandType = CommandType.StoredProcedure;
-						delumar.Parameters.Add("@CMID",SqlDbType.Int);
+						
 						delumar.Parameters["@CMID"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
 						
-						sqlconn.Open();
+						
 						
 						delmar.ExecuteNonQuery();
 						delumar.ExecuteNonQuery();
-						
-						sqlconn.Close();
-						
-						delmar = null;
-						delumar = null;
-						sqlconn.Close();
+
 						
 
 					
 					}
 					else if (type == "Med Observation"){
-						delmed.CommandType = CommandType.StoredProcedure;
-						delmed.Parameters.Add("@MedObId",SqlDbType.Int);
 						delmed.Parameters["@MedObId"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
-						
-						sqlconn.Open();
+
 						
 						delmed.ExecuteNonQuery();
-						
-						delmed = null;
-						
-						sqlconn.Close();
 						
 					}
 					else if(type == "Initial Training Dates"){
@@ -287,6 +289,10 @@ namespace SpinMARTracker
 					}
 				}
 			}
+			delmar = null;
+			delumar = null;
+			delmed = null;
+			sqlconn.Close();
 		}
 		private void DelFromSource(){
 			RadioButton rdDelI;
@@ -296,50 +302,43 @@ namespace SpinMARTracker
 			SqlCommand delmed = new SqlCommand("DeleteMedObservation",sqlconn);
 			string type;
 			
+			delmar.CommandType = CommandType.StoredProcedure;
+			delmar.Parameters.Add("@CMID",SqlDbType.Int);
+			
+			delumar.CommandType = CommandType.StoredProcedure;
+			delumar.Parameters.Add("@CMID",SqlDbType.Int);
+			
+			delmed.Parameters.Add("@MedObId",SqlDbType.Int);
+			delmed.CommandType = CommandType.StoredProcedure;
+			
+			sqlconn.Open();
 			foreach (DataGridItem i in dgSourceEmp.Items) {
 				rdDelI = (RadioButton)i.Cells[4].FindControl("rdDel");
 				
 				if(rdDelI.Checked == true){
 					type = i.Cells[0].Text.ToString();
 					
-					ManipulateFiles(i.Cells[2].Text.ToString(),type,"Delete");
+					if (type != "Initial Training Dates"){
+						ManipulateFiles(i.Cells[2].Text.ToString(),type,"Delete");
+					}
 					
 					if(type == "MAR Review"){
 						
-						delmar.CommandType = CommandType.StoredProcedure;
-						delmar.Parameters.Add("@CMID",SqlDbType.Int);
+						
+						
 						delmar.Parameters["@CMID"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
 						
-						delumar.CommandType = CommandType.StoredProcedure;
-						delumar.Parameters.Add("@CMID",SqlDbType.Int);
 						delumar.Parameters["@CMID"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
-						
-						sqlconn.Open();
 						
 						delmar.ExecuteNonQuery();
 						delumar.ExecuteNonQuery();
-						
-						sqlconn.Close();
-						
-						delmar = null;
-						delumar = null;
-						
-						sqlconn.Close();
 					
 					}
 					else if (type == "Med Observation"){
 						
-						delmed.CommandType = CommandType.StoredProcedure;
-						delmed.Parameters.Add("@MedObId",SqlDbType.Int);
 						delmed.Parameters["@MedObId"].Value = Convert.ToInt32(i.Cells[2].Text.ToString());
 						
-						sqlconn.Open();
-						
 						delmed.ExecuteNonQuery();
-						
-						delmed = null;
-						
-						sqlconn.Close();
 						
 					}
 					else if(type == "Initial Training Dates"){
@@ -347,7 +346,11 @@ namespace SpinMARTracker
 					}
 				}
 			}			
-
+			delmar = null;
+			delumar = null;
+			delmed = null;			
+			
+			sqlconn.Close();
 		}
 		private void MoveToMerge(){
 			int mout;
@@ -358,7 +361,7 @@ namespace SpinMARTracker
 			foreach (DataGridItem i in dgSourceEmp.Items) {
 				rdKeepI = (RadioButton)i.Cells[3].FindControl("rdKeep");
 				
-				if(rdKeepI.Checked == true){
+				if(rdKeepI.Checked == true && i.Cells[0].Text.ToString() != "Initial Training Dates"){
 					ManipulateFiles(i.Cells[2].Text.ToString(),i.Cells[0].Text.ToString(),"Move");
 				}
 			}			

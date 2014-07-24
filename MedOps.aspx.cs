@@ -96,6 +96,9 @@ namespace SpinMARTracker
 				ddlMOType.SelectedValue = "-1";
 			}
 			//------------------------------------------------------------------
+			SecurityChecks();
+		}
+		protected void SecurityChecks(){
 			if (Session["canDel"].ToString() != "True"){
 				btnAdd.Visible = false;
 			}

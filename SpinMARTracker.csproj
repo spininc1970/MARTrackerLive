@@ -91,6 +91,9 @@
     <Compile Include="Relationships.aspx.cs">
       <DependentUpon>Relationships.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SecurityGroups.aspx.cs">
+      <DependentUpon>SecurityGroups.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SiteMaster.master.cs">
       <DependentUpon>SiteMaster.master</DependentUpon>
     </Compile>
@@ -112,6 +115,7 @@
     <None Include="MedOps.aspx" />
     <None Include="MergeRecords.aspx" />
     <None Include="Relationships.aspx" />
+    <None Include="SecurityGroups.aspx" />
     <None Include="SiteMaster.master" />
     <None Include="SpinMARTracker.css" />
     <None Include="Users.aspx" />

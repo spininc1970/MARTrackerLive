@@ -73,10 +73,13 @@ namespace SpinMARTracker
 				ddlDSP.SelectedValue = "-1";
 				
 			}
+			SecurityChecks();
+			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
 			if (Session["EditRel"].ToString() != "True"){
 				Response.Redirect("Default.aspx");
 			}
-			//------------------------------------------------------------------
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

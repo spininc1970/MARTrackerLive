@@ -122,24 +122,19 @@ namespace SpinMARTracker
 			sgroup = Convert.ToString(Utility.GetSqlScalar("select sgroupid from users where userid='" + Session["userid"].ToString() + "'"));
 			
 			cmdRead.Connection = sqlconn;
-			cmdRead.CommandText = "select CanDelete,CanMerge,EditRelationships,MergeDiff,CanExport,ManageUsers from securitygroups where SGROUPID = " + sgroup;
+			cmdRead.CommandText = "select CanDelete,CanMerge,EditRelationships,MergeDiff,CanExport,ManageUsers,ManageGroups from securitygroups where SGROUPID = " + sgroup;
 			
 			sqlconn.Open();
 			
 			drGroup = cmdRead.ExecuteReader();
 			while(drGroup.Read()){
 				Session["canDel"] = drGroup.GetBoolean(0).ToString();
-				test = drGroup.GetBoolean(0).ToString();
 				Session["CanMerge"] = drGroup.GetBoolean(1).ToString();
-				test = drGroup.GetBoolean(1).ToString();
 				Session["EditRel"] = drGroup.GetBoolean(2).ToString();
-				test = drGroup.GetBoolean(2).ToString();
 				Session["MergeD"] = drGroup.GetBoolean(3).ToString();
-				test = drGroup.GetBoolean(3).ToString();
 				Session["CanExport"] = drGroup.GetBoolean(4).ToString();
-				test = drGroup.GetBoolean(4).ToString();
 				Session["ManageU"] = drGroup.GetBoolean(5).ToString();
-				test = drGroup.GetBoolean(5).ToString();
+				Session["ManageGrps"] = drGroup.GetBoolean(6).ToString();
 			}
 			cmdRead = null;
 			drGroup.Close();

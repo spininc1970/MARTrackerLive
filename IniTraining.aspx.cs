@@ -60,10 +60,13 @@ namespace SpinMARTracker
 				ddlEmp.Items.Insert(0,new ListItem("None Selected","-1"));
 				ddlEmp.SelectedValue="-1";
 			}
+			SecurityChecks();
+			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
 			if (Session["canDel"].ToString() != "True"){
 				Response.Redirect("Default.aspx");
 			}
-			//------------------------------------------------------------------
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

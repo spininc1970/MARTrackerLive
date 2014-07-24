@@ -33,7 +33,8 @@ namespace SpinMARTracker
 		protected DataGrid dgEmpGrid;
 		protected Button btnSaveUpdate;
 		protected Button btnCancel;
-
+		protected DropDownList ddlSgroup;
+		protected HyperLink hlMAGrps;
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		#region Page Init & Exit (Open/Close DB connections here...)
@@ -63,10 +64,15 @@ namespace SpinMARTracker
 				ddlEmp.Items.Insert(0,new ListItem("None Selected","-1"));
 				ddlEmp.SelectedValue = "-1";
 				
+				ddlSgroup.DataSource = Utility.GetSQLDataView("Select SGroupID,GroupName from SecurityGroups");
+				ddlSgroup.DataTextField = "GroupName";
+				ddlSgroup.DataValueField = "SGroupID";
+				ddlSgroup.DataBind();
+				
+				ddlSgroup.Items.Insert(0,new ListItem("None Selected","-1"));
+				ddlSgroup.SelectedValue = "-1";
 			}
-			if (Session["ManageU"].ToString() != "True"){
-				Response.Redirect("Default.aspx");
-			}
+			SecurityChecks();
 			if(ddlEmp.SelectedValue != "-1")
 			{
 				btnSaveUpdate.Enabled = true;
@@ -78,6 +84,14 @@ namespace SpinMARTracker
 			dgEmpGrid.DataSource = Utility.GetSQLDataView("Select * from v_Users order by EmployeeName asc");
 			dgEmpGrid.DataBind();
 			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
+			if (Session["ManageU"].ToString() != "True"){
+				Response.Redirect("Default.aspx");
+			}
+			if (Session["ManageGrps"].ToString() != "True"){
+				hlMAGrps.Visible = false;
+			}
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -144,9 +158,11 @@ namespace SpinMARTracker
 				addcmd.CommandType = CommandType.StoredProcedure;
 				addcmd.Parameters.Add("@empid",SqlDbType.VarChar);
 				addcmd.Parameters.Add("@ldap",SqlDbType.VarChar);
+				addcmd.Parameters.Add("@sgid",SqlDbType.Int);
 			
 				addcmd.Parameters["@empid"].Value = ddlEmp.SelectedValue.ToString();
 				addcmd.Parameters["@ldap"].Value = txtLDAP.Text.ToString();
+				addcmd.Parameters["@sgid"].Value = ddlSgroup.SelectedValue;
 			
 				sqlconn.Open();
 			
@@ -165,6 +181,7 @@ namespace SpinMARTracker
 				editcmd.Parameters.Add("@empid",SqlDbType.VarChar);
 				editcmd.Parameters.Add("@ldap",SqlDbType.VarChar);
 				editcmd.Parameters.Add("@Active",SqlDbType.Bit);
+				editcmd.Parameters.Add("@sgid",SqlDbType.Int);
 				
 				editcmd.Parameters["@empid"].Value = ddlEmp.SelectedValue.ToString();
 				editcmd.Parameters["@ldap"].Value = txtLDAP.Text.ToString();
@@ -176,6 +193,8 @@ namespace SpinMARTracker
 				{
 					editcmd.Parameters["@Active"].Value = 0;
 				}
+				
+				editcmd.Parameters["@sgid"].Value = ddlSgroup.SelectedValue;
 				
 				sqlconn.Open();
 				
@@ -205,7 +224,8 @@ namespace SpinMARTracker
 				txtLDAP.Text = e.Item.Cells[3].Text.ToString();
 			}
 			chkActive.Enabled = true;
-			chkActive.Checked = Convert.ToBoolean(e.Item.Cells[4].Text.ToString());
+			chkActive.Checked = Convert.ToBoolean(e.Item.Cells[6].Text.ToString());
+			ddlSgroup.SelectedValue = e.Item.Cells[4].Text.ToString();
 			btnSaveUpdate.Text = "Update Employee";
 			btnSaveUpdate.Enabled=true;
 			ddlEmp.Enabled= false;
@@ -219,6 +239,8 @@ namespace SpinMARTracker
 			txtLDAP.Text = "";
 			chkActive.Enabled = false;
 			chkActive.Checked = true;
+			ddlSgroup.SelectedValue = "-1";
+			ddlEmp.SelectedValue = "-1";
 		}
 		protected void Clear(object sender, EventArgs e)
 		{

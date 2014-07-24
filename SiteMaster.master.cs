@@ -48,16 +48,18 @@ namespace SpinMARTracker
 		#region Page Load
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-			string test;
 			//------------------------------------------------------------------
 			if(IsPostBack)
 			{
 			}
+			SecurityChecks();
+			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
 			if(Session["canDel"].ToString() != "True"){
 				hlConfig.Visible = false;
 				hlAdmin.Visible = false;
 			}
-			//------------------------------------------------------------------
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

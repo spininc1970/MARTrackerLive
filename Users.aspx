@@ -10,7 +10,8 @@
 <%@ MasterType VirtualPath="~/SiteMaster.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Links" Runat="Server">
 	<table>
-		<tr><td><asp:hyperlink id="hlBAdmin" runat="Server" NavigateUrl="Admin.aspx" text="Back to Admin screen"/><hr></tr></td>
+		<tr><td><asp:hyperlink id="hlBAdmin" runat="Server" NavigateUrl="Admin.aspx" text="Back to Admin screen"/><hr></td></tr>
+		<tr><td><asp:hyperlink id="hlMAGrps" runat="Server" NavigateUrl="SecurityGroups.aspx" text="Add/Edit Security Groups"/><hr></td></tr>
 	</table>	
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Main" Runat="Server">
@@ -29,6 +30,11 @@
 		<tr>
 			<td>LDAP Login Name:</td>
 			<td><asp:textbox id="txtLDAP" runat="Server"/></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Security Group:</td>
+			<td><asp:dropdownlist id="ddlSgroup" runat="Server"/></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -73,6 +79,12 @@
 							<itemstyle CssClass="GridFColumn"/>
 						</asp:boundcolumn>
 						<asp:boundcolumn headertext = "LDAP Login Name" datafield="LDAPLogin">
+							<itemstyle CssClass="GridColumns"/>
+						</asp:boundcolumn>
+						<asp:boundcolumn headertext = "Gid" datafield="SGroupID" visible="False">
+							<itemstyle CssClass="GridColumns"/>
+						</asp:boundcolumn>
+						<asp:boundcolumn headertext="Security Group" datafield="GroupName">
 							<itemstyle CssClass="GridColumns"/>
 						</asp:boundcolumn>
 						<asp:boundcolumn headertext = "Active" datafield="Active">

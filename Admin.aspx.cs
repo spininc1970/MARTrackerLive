@@ -52,6 +52,10 @@ namespace SpinMARTracker
 			{
 
 			}
+			SecurityChecks();
+			//------------------------------------------------------------------
+		}
+		protected void SecurityChecks(){
 			if (Session["canDel"].ToString() != "True"){
 				Response.Redirect("Default.aspx");
 			}
@@ -69,7 +73,6 @@ namespace SpinMARTracker
 					hlUsers.Visible = false;
 				}
 			}
-			//------------------------------------------------------------------
 		}
 		#endregion
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
