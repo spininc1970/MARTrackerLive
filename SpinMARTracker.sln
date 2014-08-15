@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.2.0.8649-Beta 2
+# SharpDevelop 4.4
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpinMARTracker", "SpinMARTracker\SpinMARTracker.csproj", "{70A885BF-9A85-431C-BB2A-39B5AD3A22D8}"
 EndProject
 Global

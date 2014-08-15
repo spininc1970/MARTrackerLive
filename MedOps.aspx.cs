@@ -233,6 +233,9 @@ namespace SpinMARTracker
 				{
 					Mtype = 1;						
 				}
+				if (Convert.ToDateTime(tDate) == Convert.ToDateTime(cDate)){
+					Mtype = 1;	
+				}
 			}
 			else{
 				Mtype = Convert.ToInt32(ddlMOType.SelectedValue);
